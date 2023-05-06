@@ -1,6 +1,10 @@
 const pronoun = ['the','our'];
 const adj = ['great', 'big' ];
-const noun = ['jogger','racoon'];
+const noun = ['jogger','racoon', 'puedes'];
+const extencions = ['.com','.es','.org','.io'];
+
+const listDomain = document.querySelector('#domain-list');
+const btnPrintListDomain = document.querySelector('#btn-print-domain');
 
 const generateCombinations = (arr1, arr2, arr3) => {
     let combinations = [];
@@ -17,12 +21,23 @@ const generateCombinations = (arr1, arr2, arr3) => {
   }
   
   
-const addExtensionToCombinations = (combinations) => {
-  const domains = [...combinations.map(item => `${item}.com`)];
-
+const addExtensionToCombinations = (combinations, extencions) => {
+  const domains = [];
+  combinations.forEach(nameDomain => {
+    extencions.forEach( item => domains.push(`${nameDomain}${item}`))
+  });
   return domains;
 }
 
-const combinations = generateCombinations(pronoun, adj, noun);
+const printListDomain = (domains) => {
+  domains.forEach(element =>{
+    listDomain.innerHTML += `<li class = 'list-group-item'>${element}</li>`
+  })
+}
 
-console.log('addExtensionToCombinations: ', addExtensionToCombinations(combinations));
+btnPrintListDomain.addEventListener('click', ()=>{
+  const combinations = generateCombinations(pronoun, adj, noun);
+  const domains = addExtensionToCombinations(combinations, extencions);
+  
+   printListDomain(domains);
+})
